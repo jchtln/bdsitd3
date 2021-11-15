@@ -21,6 +21,8 @@ pour le relancer si vous l'aviez arrêté par un `docker stop`.
 Dans un terminal (ou plusieurs), lancer un client facade (shell facade) sur l'instance du serveur `mongoserver` :
 ----
 docker exec -it mongoserver facade test
+
+docker exec -it mongoserver mongosh test
 ----
 
 
@@ -33,12 +35,12 @@ pourrons accéder à Mongo.
 
 Supposons que vos fichiers CSV sont dans /tmp ; il faut alors monter /tmp dans le container de la façon suivante :
 ----
-docker run -it --link mongoserver:facade --rm -v /tmp:/data mongo bash
+docker run -it --link mongoserver:mongosh --rm -v /tmp:/data mongo bash
 ----
 Dans *le shell de ce container*, nous allons importer les données CSV dans une nouvelle base de données `aviationus` :
 ----
-mongoimport --db cine --collection movies --host facade --port 27017 --file /data/movies.json --jsonArray
-mongoimport --db cine --collection artists --host facade --port 27017 --file /data/artits.json --jsonArray
+mongoimport --db cine --collection movies --host mongosh --port 27017 --file /data/td3/movies.json --jsonArray
+mongoimport --db cine --collection artists --host mongosh --port 27017 --file /data/td3/artists.json --jsonArray
 ----
 
 Lancez un client Mongo et tapez la commande `use cine` pour switcher sur la base normalement créée.
